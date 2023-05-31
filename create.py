@@ -2,11 +2,8 @@ import csv
 from jinja2 import Environment, FileSystemLoader
 import sys
 
-# Let's suppose your csv has columns: section, event, date, location
-
-
 def get_events(csv_filename):
-    events = {}  # We use a dictionary to store events by section
+    events = {}  # section : [event] 
 
     with open(csv_filename, 'r') as file:
         reader = csv.reader(file)
