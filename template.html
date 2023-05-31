@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #333; text-align: center;">Speaker's Brief</h1>
+        <h2 style="color: #555; text-align: center;">May 28 - June 4</h1>
+        
+        {% for section, events in events.items() %}
+        <div style="background-color: {{ section_colors[section] }}; border-radius: 20px; margin-bottom: 20px; padding: 20px;">
+            <h1 style="border-bottom: 1px solid #acacac; padding-bottom: 10px;">{{ section }}</h1>
+            
+            {% for event in events %}
+            <a href="{{ event.link }}"><h3 style="color: #333;">{{ event.event }}</h3></a>
+            <p style="color: #555;">{{ event.speaker }}</p>
+            <p style="color: #555;">{{ event.speaker_role }}</p>
+            <p style="color: #555;">{{ event.date }} @ {{event.time}}</p>
+            <br />
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
