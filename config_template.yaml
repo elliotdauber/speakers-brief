@@ -1,0 +1,8 @@
+events-csv: csv_file
+html-output: html_file
+header: Speaker's Brief
+subheader: May 28 - June 4
+section-order:
+- Highlights
+- Politics
+- Tech

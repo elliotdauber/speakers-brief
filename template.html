@@ -2,8 +2,8 @@
 <html>
 <body style="font-family: Arial, sans-serif;">
     <div style="max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #333; text-align: center;">Speaker's Brief</h1>
-        <h2 style="color: #555; text-align: center;">May 28 - June 4</h1>
+        <h1 style="color: #333; text-align: center;">{{ header }}</h1>
+        <h2 style="color: #555; text-align: center;">{{ subheader }}</h1>
         
         {% for section, events in events.items() %}
         <div style="background-color: {{ section_colors[section] }}; border-radius: 20px; margin-bottom: 20px; padding: 20px;">

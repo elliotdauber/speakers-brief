@@ -1,6 +1,14 @@
 import csv
 from jinja2 import Environment, FileSystemLoader
 import sys
+import yaml
+
+def get_config(config_filename):
+    with open(config_filename, "r") as stream:
+        try:
+            return yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(f"Error reading {config_filename}:", exc)
 
 def get_events(csv_filename):
     events = {}  # section : [event] 
@@ -16,7 +24,7 @@ def get_events(csv_filename):
     
     return events
 
-def render(events, output_html_filename):
+def render(events, header, subheader, section_order, output_html_filename):
     env = Environment(loader=FileSystemLoader('.'))
     template = env.get_template('template.html')
 
@@ -26,19 +34,26 @@ def render(events, output_html_filename):
         "Tech": "#f8e6e0"
     }
 
-    rendered_html = template.render(events=events, section_colors=section_colors)
+    sections = [{"name": section, "color": section_colors[section]} for section in section_order]
+    rendered_html = template.render(header=header, subheader=subheader, events=events, sections=sections)
 
-    # Write the HTML output
     with open(output_html_filename, 'w') as file:
         file.write(rendered_html)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print(f"usage: python3 {sys.argv[0]} csv_filename, output_html_filename")
+    if len(sys.argv) != 2:
+        print(f"usage: python3 {sys.argv[0]} config_filename")
         exit(1)
 
-    csv_filename = sys.argv[1]
-    output_html_filename = sys.argv[2]
+    config_filename = sys.argv[1]
+
+    config = get_config(config_filename)
+
+    csv_filename = config['events-csv']
+    output_html_filename = config['html-output']
+    header = config['header']
+    subheader = config['subheader']
+    section_order = config['section-order']
 
     events = get_events(csv_filename)
-    render(events, output_html_filename)
+    render(events, header, subheader, section_order, output_html_filename)
