@@ -4,12 +4,13 @@
     <div style="max-width: 600px; margin: 0 auto;">
         <h1 style="color: #333; text-align: center;">{{ header }}</h1>
         <h2 style="color: #555; text-align: center;">{{ subheader }}</h1>
-        
-        {% for section, events in events.items() %}
-        <div style="background-color: {{ section_colors[section] }}; border-radius: 20px; margin-bottom: 20px; padding: 20px;">
-            <h1 style="border-bottom: 1px solid #acacac; padding-bottom: 10px;">{{ section }}</h1>
+
+        {% for section in sections %}
+        {% if section.name in events %}
+        <div style="background-color: {{ section.color }}; border-radius: 20px; margin-bottom: 20px; padding: 20px;">
+            <h1 style="border-bottom: 1px solid #acacac; padding-bottom: 10px;">{{ section.name }}</h1>
             
-            {% for event in events %}
+            {% for event in events[section.name] %}
             <a href="{{ event.link }}"><h3 style="color: #333;">{{ event.event }}</h3></a>
             <p style="color: #555;">{{ event.speaker }}</p>
             <p style="color: #555;">{{ event.speaker_role }}</p>
@@ -17,6 +18,8 @@
             <br />
             {% endfor %}
         </div>
+        
+        {% endif %}
         {% endfor %}
     </div>
 </body>
